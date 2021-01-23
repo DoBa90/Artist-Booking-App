@@ -136,6 +136,7 @@ class ArtistForm(Form):
     state = SelectField(
         'state', validators=[DataRequired()],
         choices=[
+            ('AL', 'AL'),
             ('AK', 'AK'),
             ('AZ', 'AZ'),
             ('AR', 'AR'),
@@ -195,7 +196,7 @@ class ArtistForm(Form):
     image_link = StringField(
         'image_link'
     )
-    genres = SelectField(
+    genres = SelectMultipleField(
         # TODO implement enum restriction
         'genres', validators=[DataRequired()],
         choices=[
