@@ -361,31 +361,16 @@ def edit_artist(artist_id):
   form = ArtistForm()
   artist = Artist.query.get(artist_id)
   
-  if artist:
-    form.id = artist.id
-    form.name = artist.name
-    form.city = artist.city
-    form.state = artist.state
-    form.phone = artist.phone
-    form.genres = artist.genres
-    form.facebook_link = artist.facebook_link
-    form.image_link = artist.image_link
-    form.seeking_venue = artist.seeking_venue
-    form.seeking_description = artist.seeking_description
-
-  artist={
-    "id": 4,
-    "name": "Guns N Petals",
-    "genres": ["Rock n Roll"],
-    "city": "San Francisco",
-    "state": "CA",
-    "phone": "326-123-5000",
-    "website": "https://www.gunsnpetalsband.com",
-    "facebook_link": "https://www.facebook.com/GunsNPetals",
-    "seeking_venue": True,
-    "seeking_description": "Looking for shows to perform at in the San Francisco Bay Area!",
-    "image_link": "https://images.unsplash.com/photo-1549213783-8284d0336c4f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80"
-  }
+  form.id = artist.id
+  form.name = artist.name
+  form.city = artist.city
+  form.state = artist.state
+  form.phone = artist.phone
+  form.genres = artist.genres
+  form.facebook_link = artist.facebook_link
+  form.image_link = artist.image_link
+  form.seeking_venue = artist.seeking_venue
+  form.seeking_description = artist.seeking_description
 
   return render_template('forms/edit_artist.html', form=form, artist=artist)
 
@@ -404,7 +389,7 @@ def edit_artist_submission(artist_id):
     artist.facebook_link = request.form['facebook_link']
     artist.seeking_description = request.form['seeking_description']
     artist.seeking_venue = request.form['seeking_venue']
-       
+    db.session.add(artist)
     db.session.commit()
   except:
     error = True
@@ -427,23 +412,22 @@ def edit_venue(venue_id):
   form = VenueForm()
   venue = Venue.query.get(venue_id)
   
-  if venue:
-    form.id = venue.id
-    form.name = venue.name
-    form.city = venue.city
-    form.state = venue.state
-    form.phone = venue.phone
-    form.genres = venue.genres
-    form.facebook_link = venue.facebook_link
-    form.image_link = venue.image_link
-    form.seeking_venue = venue.seeking_venue
-    form.seeking_description = venue.seeking_description
+  form.id = venue.id
+  form.name = venue.name
+  form.city = venue.city
+  form.state = venue.state
+  form.phone = venue.phone
+  form.genres = venue.genres
+  form.facebook_link = venue.facebook_link
+  form.image_link = venue.image_link
+  form.seeking_venue = venue.seeking_venue
+  form.seeking_description = venue.seeking_description
   
   return render_template('forms/edit_venue.html', form=form, venue=venue)
 
 @app.route('/venues/<int:venue_id>/edit', methods=['POST'])
 def edit_venue_submission(venue_id):
-  venue = Venue.query.get(artist_id)
+  venue = Venue.query.get(venue_id)
   error = False
   try:
     venue.name = request.form['name']
@@ -457,7 +441,7 @@ def edit_venue_submission(venue_id):
     venue.website = request.form['website']
     venue.seeking_description = request.form['seeking_description']
     venue.seeking_venue = request.form['seeking_venue']
-       
+    db.session.add(artist)
     db.session.commit()
   except:
     error = True
